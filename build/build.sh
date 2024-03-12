@@ -32,7 +32,7 @@ if [[ -z "$OUTPUT_DIR" ]] || [[ -z "$WMCO_SEMVER" ]] ; then
     exit 1
 fi
 
-WMCO_CMD_DIR="github.com/openshift/windows-machine-config-operator/cmd/operator"
+WMCO_CMD_DIR="github.com/openshift/windows-machine-config-operator/cmd"
 BIN_NAME="windows-machine-config-operator"
 BIN_DIR="${OUTPUT_DIR}/bin"
 

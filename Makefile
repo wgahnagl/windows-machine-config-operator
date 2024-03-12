@@ -71,11 +71,11 @@ help: ## Display this help.
 
 .PHONY: manifests
 manifests: controller-gen ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
-	$(CONTROLLER_GEN) rbac:roleName=windows-machine-config-operator crd webhook paths="{./cmd/..., ./controllers/..., ./pkg/...}" output:crd:artifacts:config=config/crd/bases
+	$(CONTROLLER_GEN) rbac:roleName=windows-machine-config-operator crd webhook paths="{./cmd/..., ./controller/..., ./pkg/...}" output:crd:artifacts:config=config/crd/bases
 
 .PHONY: generate
 generate: controller-gen ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations. Must be run when adding or changing a CRD.
-	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="{./cmd/..., ./controllers/..., ./pkg/...}"
+	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="{./cmd/..., ./controller/..., ./pkg/...}"
 
 .PHONY: fmt
 fmt: ## Run go fmt against code.
@@ -106,7 +106,7 @@ build-daemon:
 
 .PHONY: run
 run: manifests generate fmt vet ## Run a controller from your host.
-	go run cmd/operator/main.go
+	go run cmd/main.go
 
 ifndef IGNORE-NOT-FOUND
   IGNORE-NOT-FOUND = false
