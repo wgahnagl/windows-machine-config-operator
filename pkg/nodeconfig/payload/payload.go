@@ -175,10 +175,28 @@ $cni_template=$cni_template.Replace("provider_address",$provider_address)
 Compare-And-Replace-Config -ConfigPath CNI_CONFIG_PATH -NewConfigContent $cni_template
 
 # Create HNS endpoint if it doesn't exist
-$endpoint = Invoke-HNSRequest GET endpoints | where { $_.Name -eq 'VIPEndpoint'}
+$retryCount = 3
+$retryDelay = 2
+$attempt = 0
+
+while ($attempt -lt $retryCount) {
+  try {
+    $endpoint = Invoke-HNSRequest GET endpoints | where { $_.Name -eq 'VIPEndpoint'}
+  } catch {
+    Write-Host "Attempt $($attempt + 1) failed: $_.Exception.Message"
+    if ($attempt -eq ($retryCount - 1)) {
+      Write-Host "Max retry attempts reached. continuing."
+      exit 1
+    }
+  Start-Sleep -Seconds $retryDelay
+  }
+  $attempt++
+}
+
+
 if( $endpoint -eq $null) {
-    $endpoint = New-HnsEndpoint -NetworkId $hns_network.ID -Name "VIPEndpoint"
-    Attach-HNSHostEndpoint -EndpointID $endpoint.ID -CompartmentID 1
+  $endpoint = New-HnsEndpoint -NetworkId $hns_network.ID -Name "VIPEndpoint"
+  Attach-HNSHostEndpoint -EndpointID $endpoint.ID -CompartmentID 1
 }
 # Get HNS endpoint IP
 $sourceVip = (Get-NetIPConfiguration -AllCompartments -All -Detailed | where { $_.NetAdapter.LinkLayerAddress -eq $endpoint.MacAddress }).IPV4Address.IPAddress.Trim()
