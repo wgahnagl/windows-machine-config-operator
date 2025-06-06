@@ -34,6 +34,7 @@ spec:
     value: "true" 
   - name: targetBranch
     value: "{{target_branch}}"
+
   - name: image-expires-after
     value: 5d
   - name: output-image
@@ -154,6 +155,8 @@ spec:
         value: $(params.output-image).git
       - name: ociArtifactExpiresAfter
         value: $(params.image-expires-after)
+      - name: depth
+        value: "0" 
       runAfter:
       - init
       taskRef:
