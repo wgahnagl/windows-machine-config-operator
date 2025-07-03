@@ -499,9 +499,9 @@ spec:
     stepSpecs:
     - computeResources:
         limits:
-          memory: 8Gi
+          memory: 10Gi
         requests:
-          memory: 8Gi
+          memory: 10Gi
       name: use-trusted-artifact
   - pipelineTaskName: sast-shell-check
     stepSpecs:
