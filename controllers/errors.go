@@ -6,9 +6,9 @@ import (
 
 type UpgradeLimitExceededError struct {
 	NodeName string
-	Limit    int
+	Count    int
 }
 
 func (e *UpgradeLimitExceededError) Error() string {
-	return fmt.Sprintf("Cannot mark node %s as upgrading. Maximum parallel upgrades reached (%d)", e.NodeName, e.Limit)
+	return fmt.Sprintf("Cannot mark node %s as upgrading. Current number of upgrading nodes is (%d)", e.NodeName, e.Count)
 }
