@@ -11,10 +11,13 @@ replace (
 	golang.org/x/oauth2 => github.com/openshift/golang-oauth2 v0.26.1-0.20250310184649-06a918c6239d
 	// fix CVE-2025-22869 with downstream tag v0.33.openshift.1
 	golang/x/crypto => github.com/openshift/golang-crypto v0.33.1-0.20250310193910-9003f682e581
+	google.golang.org/protobuf => google.golang.org/protobuf v1.36.6
+	k8s.io/kube-openapi => k8s.io/kube-openapi v0.0.0-20250318190949-c8a335a9a2ff
 	// fix the latest working version for go1.22, remove the replacement with the go1.23 bump
 	sigs.k8s.io/json => sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd
 	// fix to solve the issue of unknown field IgnoredFields in struct literal of type merge.Updater
 	sigs.k8s.io/structured-merge-diff/v4 => sigs.k8s.io/structured-merge-diff/v4 v4.4.1
+
 )
 
 require (
@@ -23,9 +26,9 @@ require (
 	github.com/coreos/ignition/v2 v2.20.0
 	github.com/go-imports-organizer/goio v1.5.0
 	github.com/go-logr/logr v1.4.3
-	github.com/openshift/api v0.0.0-20250527205821-9fce26d4cc74
-	github.com/openshift/client-go v0.0.0-20241107164952-923091dd2b1a
-	github.com/openshift/library-go v0.0.0-20250602082827-408fc1e33d77
+	github.com/openshift/api v0.0.0-20250905190223-e16f6cc86094
+	github.com/openshift/client-go v0.0.0-20250106104058-89709a455e2a
+	github.com/openshift/library-go v0.0.0-20250826155838-0a26881e10ab
 	github.com/operator-framework/api v0.16.0
 	github.com/operator-framework/operator-lib v0.4.0
 	github.com/operator-framework/operator-lifecycle-manager v0.22.0
@@ -40,9 +43,9 @@ require (
 	golang.org/x/crypto v0.32.0
 	golang.org/x/mod v0.22.0
 	golang.org/x/sys v0.29.0
-	k8s.io/api v0.31.9
-	k8s.io/apimachinery v0.31.9
-	k8s.io/client-go v0.31.9
+	k8s.io/api v0.31.13
+	k8s.io/apimachinery v0.31.13
+	k8s.io/client-go v0.31.13
 	k8s.io/cloud-provider v0.30.13
 	k8s.io/klog/v2 v2.130.1
 	k8s.io/kubectl v0.31.9
