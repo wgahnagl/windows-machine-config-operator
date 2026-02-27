@@ -25,10 +25,31 @@ function help() {
   echo "update_submodules.sh -m kubernetes -r release-4.9 master"
 }
 
+# Checks if the go version in the go.mod is compatable with library updates 
+  function check_go_version() {                                                                         
+    local go_version=$(grep '^go ' go.mod | awk '{print $2}')                                           
+    local major=$(echo $go_version | cut -d. -f1)                                                       
+    local minor=$(echo $go_version | cut -d. -f2)                                                       
+                                                                                                        
+    if [ "$major" -gt 1 ] || ([ "$major" -eq 1 ] && [ "$minor" -ge 23 ]); then                          
+      return 0                                                                                          
+    else                                                                                                
+      return 1                                                                                          
+    fi                                                                                                  
+  }  
+
+
 # update_libraries updates the k8s and OpenShift libraries
 function update_libraries() {
   local base_branch=$1
   local version=$2
+
+  if ! check_go_version; then 
+    local go_version=$(grep '^go ' go.mod | awk '{print $2}')
+    echo "Skipping library updates: Go version $go_version does not match"
+    return 0 
+  fi 
+
   go get github.com/openshift/api@$base_branch
   go get github.com/openshift/client-go@$base_branch
   go get github.com/openshift/library-go@$base_branch
