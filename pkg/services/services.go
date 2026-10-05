@@ -196,8 +196,10 @@ func kubeProxyConfiguration(debug bool) servicescm.Service {
 
 // csiProxyConfiguration returns the Service definition for csi-proxy
 func csiProxyConfiguration(debug bool) servicescm.Service {
-	serviceCmd := fmt.Sprintf("%s -log_file=%s -logtostderr=false -windows-service", windows.CSIProxyPath,
+	serviceCmd := logconfig.GetKubeLogRunnerCmd(windows.KubeLogRunnerPath, windows.CSIProxyPath,
 		windows.CSIProxyLog)
+	// Add csi-proxy specific flags
+	serviceCmd = fmt.Sprintf("%s -logtostderr -windows-service", serviceCmd)
 	// Set log level
 	serviceCmd = fmt.Sprintf("%s %s", serviceCmd, klogVerbosityArg(debug))
 	return servicescm.Service{
